@@ -6,5 +6,7 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="lib" path="aspectjml-lib/aspectjml-release1.8.1.jar"/>
+	<classpathentry kind="lib" path="aspectjml-lib/aspectjrt.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
