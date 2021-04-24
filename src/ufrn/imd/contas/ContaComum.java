@@ -1,42 +1,48 @@
-package ufrn.imd;
+package ufrn.imd.contas;
 
-public class Conta {
+import ufrn.imd.exceptions.OperacaoIllegalException;
+import ufrn.imd.interfaces.OperacaoCreditar;
+import ufrn.imd.interfaces.OperacaoDebitar;
+
+public class ContaComum implements OperacaoCreditar, OperacaoDebitar {
 	private String codigo;
-	private double saldo = 0;
+	private Double saldo = new Double(0);
 
-	public Conta (String p_id, double p_saldo) {
+	public ContaComum (String p_id, double p_saldo) {
 		this.saldo = p_saldo;
-		this.codigo = p_id;
+		this.setCodigo(p_id);
 	}
 
-	public double getSaldo() {
-		return saldo;
-	}
-
-	public double debitar (double valor) throws OperacaoIlegalException {
+	@Override
+	public void debitar(Double valor) throws OperacaoIllegalException {
 		if( valor > saldo ){
-			throw new OperacaoIlegalException();
+			throw new OperacaoIllegalException();
 		}
 		else{
 			saldo = saldo-valor;
 		}
-		return saldo;
 	}
 
 
-	public double creditar (double valor) throws OperacaoIlegalException {
+	@Override
+	public void creditar (Double valor) throws OperacaoIllegalException {
 		if(valor > 0 ){
 			saldo = saldo+valor;
 		}
 		else{
-			throw new OperacaoIlegalException();
+			throw new OperacaoIllegalException();
 		}
-		return saldo;
-
 	}
 
-	public void transferir (Conta destino, double valor) throws OperacaoIlegalException {
-		destino.creditar(valor);
-		this.debitar(valor);
+	public String getCodigo() {
+		return codigo;
+	}
+
+	public void setCodigo(String codigo) {
+		this.codigo = codigo;
+	}
+	
+	public double getSaldo() {
+		return saldo;
 	}
 }
