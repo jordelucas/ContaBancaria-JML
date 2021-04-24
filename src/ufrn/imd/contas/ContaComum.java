@@ -6,7 +6,7 @@ import ufrn.imd.interfaces.OperacaoDebitar;
 
 public class ContaComum implements OperacaoCreditar, OperacaoDebitar {
 	private String codigo;
-	public double saldo = 0;
+	private double saldo = 0;
 
 	public ContaComum (String p_id, double p_saldo) {
 		this.saldo = p_saldo;
