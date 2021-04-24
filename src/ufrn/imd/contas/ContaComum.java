@@ -6,28 +6,30 @@ import ufrn.imd.interfaces.OperacaoDebitar;
 
 public class ContaComum implements OperacaoCreditar, OperacaoDebitar {
 	private String codigo;
-	public double saldo = 0;
-
+	
+	//@ public invariant saldo >= 0;
+	private /*@ spec_public @*/ double saldo = 0; 
+	
+	
 	public ContaComum (String p_id, double p_saldo) {
-		this.saldo = p_saldo;
+		this.setSaldo(p_saldo);
 		this.setCodigo(p_id);
 	}
 
 	@Override
 	public void debitar(double valor) throws OperacaoIllegalException {
-		if( valor > saldo ){
+		if( valor > this.getSaldo() ){
 			throw new OperacaoIllegalException();
 		}
 		else{
-			saldo = saldo-valor;
+			this.setSaldo(this.getSaldo()-valor);
 		}
 	}
-
 
 	@Override
 	public void creditar(double valor) throws OperacaoIllegalException {
 		if(valor > 0 ){
-			saldo = saldo+valor;
+			this.setSaldo(this.getSaldo()+valor);
 		}
 		else{
 			throw new OperacaoIllegalException();
@@ -44,5 +46,12 @@ public class ContaComum implements OperacaoCreditar, OperacaoDebitar {
 	
 	public double getSaldo() {
 		return saldo;
+	}
+	
+	/*@ private represents 
+	 @ 		saldo <- saldo;
+	 @*/
+	private void setSaldo(double saldo) {
+		this.saldo = saldo;
 	}
 }
