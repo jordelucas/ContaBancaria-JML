@@ -5,12 +5,12 @@ import ufrn.imd.interfaces.OperacaoTransferir;
 
 public class ContaEspecial extends ContaComum implements OperacaoTransferir {
 	
-	public ContaEspecial(String codigo, Double valor) {
+	public ContaEspecial(String codigo, double valor) {
 		super(codigo, valor);
 	}
 
 	@Override
-	public void transferir(ContaComum conta, Double valor) throws OperacaoIllegalException {
+	public void transferir(ContaComum conta, double valor) throws OperacaoIllegalException {
 		this.debitar(valor);
 		conta.creditar(valor);
 	}

@@ -5,5 +5,5 @@ import ufrn.imd.exceptions.OperacaoIllegalException;
 
 public interface OperacaoTransferir {
 
-	void transferir(ContaComum conta, Double valor) throws OperacaoIllegalException;
+	void transferir(ContaComum conta, double valor) throws OperacaoIllegalException;
 }

@@ -4,5 +4,5 @@ import ufrn.imd.exceptions.OperacaoIllegalException;
 
 public interface OperacaoCreditar {
 
-	void creditar(Double valor) throws OperacaoIllegalException;
+	void creditar(double valor) throws OperacaoIllegalException;
 }
