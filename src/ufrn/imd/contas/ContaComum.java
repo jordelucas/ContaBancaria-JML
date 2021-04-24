@@ -8,7 +8,7 @@ public class ContaComum implements OperacaoCreditar, OperacaoDebitar {
 	private String codigo;
 	
 	//@ public invariant saldo >= 0;
-	private /*@ spec_public @*/ double saldo = 0; 
+	protected /*@ spec_public @*/ double saldo = 0; 
 	
 	
 	public ContaComum (String p_id, double p_saldo) {
@@ -36,7 +36,7 @@ public class ContaComum implements OperacaoCreditar, OperacaoDebitar {
 		}
 	}
 
-	public String getCodigo() {
+	public /*@ pure @*/ String getCodigo() {
 		return codigo;
 	}
 
@@ -44,11 +44,11 @@ public class ContaComum implements OperacaoCreditar, OperacaoDebitar {
 		this.codigo = codigo;
 	}
 	
-	public double getSaldo() {
+	public /*@ pure @*/ double getSaldo() {
 		return saldo;
 	}
 	
-	/*@ private represents 
+	/*@ protected represents 
 	 @ 		saldo <- saldo;
 	 @*/
 	private void setSaldo(double saldo) {
