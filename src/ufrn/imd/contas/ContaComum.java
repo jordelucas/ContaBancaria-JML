@@ -6,7 +6,7 @@ import ufrn.imd.interfaces.OperacaoDebitar;
 
 public class ContaComum implements OperacaoCreditar, OperacaoDebitar {
 	private String codigo;
-	private Double saldo = new Double(0);
+	public double saldo = 0;
 
 	public ContaComum (String p_id, double p_saldo) {
 		this.saldo = p_saldo;
@@ -14,7 +14,7 @@ public class ContaComum implements OperacaoCreditar, OperacaoDebitar {
 	}
 
 	@Override
-	public void debitar(Double valor) throws OperacaoIllegalException {
+	public void debitar(double valor) throws OperacaoIllegalException {
 		if( valor > saldo ){
 			throw new OperacaoIllegalException();
 		}
@@ -25,7 +25,7 @@ public class ContaComum implements OperacaoCreditar, OperacaoDebitar {
 
 
 	@Override
-	public void creditar (Double valor) throws OperacaoIllegalException {
+	public void creditar(double valor) throws OperacaoIllegalException {
 		if(valor > 0 ){
 			saldo = saldo+valor;
 		}
