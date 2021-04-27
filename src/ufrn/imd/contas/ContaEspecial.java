@@ -5,6 +5,9 @@ import ufrn.imd.interfaces.OperacaoTransferir;
 
 public class ContaEspecial extends ContaComum implements OperacaoTransferir {
 	
+	/*@ protected represents 
+	 @ 		saldo <- saldo;
+	 @*/
 	public ContaEspecial(String codigo, double valor) {
 		super(codigo, valor);
 	}
