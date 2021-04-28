@@ -55,22 +55,39 @@ public class ContaComum implements OperacaoCreditar, OperacaoDebitar {
 		this.getExtrato().add(transacao);
 	}
 
+	/*@ 
+	@ ensures \result == codigo;
+	@*/
 	public /*@ pure @*/ String getCodigo() {
 		return codigo;
 	}
 
-	public void setCodigo(String codigo) {
-		this.codigo = codigo;
+	/*@ 
+	@ assignable codigo;
+	@ ensures codigo == c;
+	@*/
+	public void setCodigo(String c) {
+		this.codigo = c;
 	}
 	
+	/*@ 
+	@ ensures \result == saldoConta;
+	@*/
 	public /*@ pure @*/ double getSaldoConta() {
 		return saldoConta;
 	}
 	
+	/*@ 
+	@ assignable saldoConta;
+	@ ensures saldoConta == saldo;
+	@*/
 	private void setSaldoConta(double saldo) {
 		this.saldoConta = saldo;
 	}
 	
+	/*@ 
+	@ ensures \result == extrato;
+	@*/
 	public /*@ pure @*/ List<Transacao> getExtrato() {
 		return this.extrato;
 	}
