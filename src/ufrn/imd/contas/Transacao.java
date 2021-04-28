@@ -3,34 +3,65 @@ package ufrn.imd.contas;
 import java.util.Date;
 
 public class Transacao {
-	private TipoOperacao tipoOperacao;
-	private Date dataOperacao;
-	private double valor;
+	private /*@ spec_public @*/ TipoOperacao tipoOperacao;
+	private /*@ spec_public @*/ Date dataOperacao;
+	private /*@ spec_public @*/ double valor;
 	
-	public Transacao(TipoOperacao tipoOperacao, Date dataOperacao, double valor) {
+	/*@ assignable tipoOperacao, dataOperacao, valor;
+	@ ensures tipoOperacao == tipo;
+	@ ensures dataOperacao == data;
+	@ ensures valor == novoValor;
+	@*/
+	public Transacao(TipoOperacao tipo, Date data, double novoValor) {
 		super();
-		this.tipoOperacao = tipoOperacao;
-		this.dataOperacao = dataOperacao;
-		this.valor = valor;
+		this.tipoOperacao = tipo;
+		this.dataOperacao = data;
+		this.valor = novoValor;
 	}
 	
-	public TipoOperacao getTipoOperacao() {
+	/*@ 
+	@ ensures \result == tipoOperacao;
+	@*/
+	public /*@ pure @*/ TipoOperacao getTipoOperacao() {
 		return tipoOperacao;
 	}
-	public void setTipoOperacao(TipoOperacao tipoOperacao) {
-		this.tipoOperacao = tipoOperacao;
+	
+	/*@ 
+	@ assignable tipoOperacao;
+	@ ensures tipoOperacao == tipo;
+	@*/
+	public void setTipoOperacao(TipoOperacao tipo) {
+		this.tipoOperacao = tipo;
 	}
-	public Date getDataOperacao() {
+	
+	/*@ 
+	@ ensures \result == dataOperacao;
+	@*/
+	public /*@ pure @*/ Date getDataOperacao() {
 		return dataOperacao;
 	}
-	public void setDataOperacao(Date dataOperacao) {
-		this.dataOperacao = dataOperacao;
+	
+	/*@ 
+	@ assignable dataOperacao;
+	@ ensures dataOperacao == data;
+	@*/
+	public void setDataOperacao(Date data) {
+		this.dataOperacao = data;
 	}
-	public double getValor() {
+	
+	/*@ 
+	@ ensures \result == valor;
+	@*/
+	public /*@ pure @*/ double getValor() {
 		return valor;
 	}
-	public void setValor(double valor) {
-		this.valor = valor;
+	
+	/*@ 
+	@ assignable valor;
+	@ ensures valor == novoValor;
+	@*/
+	public void setValor(double novoValor) {
+		this.valor = novoValor;
 	}
 
 	@Override
