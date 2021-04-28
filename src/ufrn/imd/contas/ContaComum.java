@@ -9,7 +9,7 @@ import ufrn.imd.interfaces.OperacaoCreditar;
 import ufrn.imd.interfaces.OperacaoDebitar;
 
 public class ContaComum implements OperacaoCreditar, OperacaoDebitar {
-	private String codigo;
+	private /*@ spec_public @*/ String codigo;
 	
 	//@ public invariant saldoConta >= 0;
 	/*@ protected represents 
@@ -46,7 +46,7 @@ public class ContaComum implements OperacaoCreditar, OperacaoDebitar {
 	}
 	
 	/*@ also
-	 @ ensures (\forall int i; i<=0 && i < \old(extrato.size()); extrato.get(i).equals(\old(extrato.get(i))));
+	 @ ensures (\forall int i; i>=0 && i < \old(extrato.size()); extrato.get(i).equals(\old(extrato.get(i))));
 	 @ ensures extrato.size() == \old(extrato).size()+1;
 	 @*/
 	@Override
