@@ -1,5 +1,9 @@
 package ufrn.imd.contas;
 
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
 import ufrn.imd.exceptions.OperacaoIllegalException;
 import ufrn.imd.interfaces.OperacaoCreditar;
 import ufrn.imd.interfaces.OperacaoDebitar;
@@ -7,33 +11,48 @@ import ufrn.imd.interfaces.OperacaoDebitar;
 public class ContaComum implements OperacaoCreditar, OperacaoDebitar {
 	private String codigo;
 	
-	//@ public invariant saldo >= 0;
-	protected /*@ spec_public @*/ double saldo = 0; 
+	//@ public invariant saldoConta >= 0;
+	/*@ protected represents 
+	 @ 		saldo = saldoConta;
+	 @*/
 	
+	protected /*@ spec_public @*/ double saldoConta = 0; 
+	
+	protected /*@ spec_public non_null @*/ List<Transacao> extrato = new ArrayList<Transacao>();
+	
+	/*@ protected represents 
+	 @ 		historico = extrato;
+	 @*/
+	//@ public initially extrato != null;
+	//@ public initially extrato.size() == 0;
+	//@ public invariant extrato.size() >= 0;
+	//@ public invariant (\forall int i; i<=0 && i < extrato.size(); extrato.get(i) != null);
 	
 	public ContaComum (String p_id, double p_saldo) {
-		this.setSaldo(p_saldo);
+		this.setSaldoConta(p_saldo);
 		this.setCodigo(p_id);
 	}
 
 	@Override
 	public void debitar(double valor) throws OperacaoIllegalException {
-		if( valor > this.getSaldo() ){
-			throw new OperacaoIllegalException();
-		}
-		else{
-			this.setSaldo(this.getSaldo()-valor);
-		}
+		this.setSaldoConta(this.getSaldoConta()-valor);
+		this.registrar(TipoOperacao.DEBITO, new Date(), valor);
 	}
 
 	@Override
 	public void creditar(double valor) throws OperacaoIllegalException {
-		if(valor > 0 ){
-			this.setSaldo(this.getSaldo()+valor);
-		}
-		else{
-			throw new OperacaoIllegalException();
-		}
+		this.setSaldoConta(this.getSaldoConta()+valor);
+		this.registrar(TipoOperacao.CREDITO, new Date(), valor);
+	}
+	
+	/*@ also
+	 @ ensures (\forall int i; i<=0 && i < \old(extrato.size()); extrato.get(i).equals(\old(extrato.get(i))));
+	 @ ensures extrato.size() == \old(extrato).size()+1;
+	 @*/
+	@Override
+	public void registrar(TipoOperacao tipoOperacao, Date dataOperacao, double valor) {
+		Transacao transacao = new Transacao(tipoOperacao, dataOperacao, valor);
+		this.getExtrato().add(transacao);
 	}
 
 	public /*@ pure @*/ String getCodigo() {
@@ -44,14 +63,15 @@ public class ContaComum implements OperacaoCreditar, OperacaoDebitar {
 		this.codigo = codigo;
 	}
 	
-	public /*@ pure @*/ double getSaldo() {
-		return saldo;
+	public /*@ pure @*/ double getSaldoConta() {
+		return saldoConta;
 	}
 	
-	/*@ protected represents 
-	 @ 		saldo <- saldo;
-	 @*/
-	private void setSaldo(double saldo) {
-		this.saldo = saldo;
+	private void setSaldoConta(double saldo) {
+		this.saldoConta = saldo;
+	}
+	
+	public /*@ pure @*/ List<Transacao> getExtrato() {
+		return this.extrato;
 	}
 }
